@@ -1,0 +1,42 @@
+{
+  "_说明": "apply-lock.json 的字段定义。这是运行时状态机，不是跨模块契约——不出现在 docs/module-contracts.md 里，只在本模块内部读写。",
+  "文件名": "apply-lock.json",
+  "字段": {
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed"],
+      "说明": "pending=未启动本轮 / in_progress=正在跑 / completed=本轮已收尾。定时触发时先读这个字段判断要不要跑，不信会话记忆。"
+    },
+    "risk_paused": {
+      "type": "boolean",
+      "默认值": false,
+      "说明": "⭐ 一旦置 true，后续所有自动触发直接结束、不重试、不做任何投递相关操作，优先级高于其他任何判断逻辑。只能由熔断触发置为 true，只能由显式人工动作置回 false——不设自动超时恢复。"
+    },
+    "risk_note": {
+      "type": "string | null",
+      "说明": "risk_paused 为 true 时，记录触发的具体信号是什么（验证码/异地登录提醒/异常操作提示/账号异常状态页），供人工判断是否可以解除。"
+    },
+    "date": {
+      "type": "string",
+      "format": "YYYY-MM-DD",
+      "说明": "本条锁记录对应的日期，用于判断今天是否已经跑过。"
+    },
+    "confirmed_count": {
+      "type": "integer",
+      "说明": "⚠️ 这是缓存值，不是真相来源。每次读取后必须用 ledger.md 当天的真实记录数重新核对一遍，不一致时以台账为准并更新这个字段，而不是反过来信这个字段。"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "ISO 8601 timestamp",
+      "说明": "每次状态变更都更新，用于判断 in_progress 状态是否是一个已经异常挂起的旧记录（例如上次会话意外中断，锁没有正常释放）。"
+    }
+  },
+  "示例（全部为占位值，不代表任何推荐配置）": {
+    "status": "completed",
+    "risk_paused": false,
+    "risk_note": null,
+    "date": "YYYY-MM-DD",
+    "confirmed_count": 0,
+    "updated_at": "YYYY-MM-DDThh:mm:ssZ"
+  }
+}

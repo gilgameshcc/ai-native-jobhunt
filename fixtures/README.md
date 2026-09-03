@@ -41,18 +41,22 @@ fixtures/
 
 > 最后一次跑：**2026-08-31**。**这一节的下半部分比上半部分重要** —— 没有覆盖的要如实列出来，不要留白让人以为都测过了。
 
-### 覆盖：六个模块 · 38 对
+### 覆盖：八个模块 · 50 对
 
 | 模块 | 目录 | 对数 | 首跑结果 |
 |---|---|---|---|
 | 工作区约定 | [`00-workspace/`](00-workspace/expected.md) | 3 | 3 PASS |
+| ⭐ 简历整理 | [`01-resume/`](01-resume/expected.md) | 4 | 4 PASS |
 | 岗位定级 | [`jd-triage/`](jd-triage/expected.md) | 4 | 4 PASS |
 | 面试前评估 | [`interview-strategic-assessment/`](interview-strategic-assessment/expected.md) | 4 | 4 PASS |
 | 当天复盘 | [`04-interview/`](04-interview/expected.md) | 10 | 8 PASS · **2 对首跑 FAIL**（均已改判据后 PASS） |
 | offer 排序 | [`05-offer/`](05-offer/expected.md) | 4 | 4 PASS |
 | 方向双环 | [`06-positioning/`](06-positioning/expected.md) | 13 | 11 PASS · **2 对首跑 FAIL**（均已改判据后 PASS） |
+| ⭐ 判断闸门式投递 | [`02-apply/`](02-apply/expected.md) | 8 | 8 PASS |
 
 ⭐ **方向双环的两套固件分开结算**（`H1-*` 收敛环 / `H2-*` 发散环）：两个环的判据方向相反 —— 收敛环防过拟合、发散环防把单次信号当噪声滤掉 —— **合并计分会互相掩盖失败**。
+
+⚠️ **简历整理与判断闸门式投递首跑即全部通过，这不是加分项。** 和其它模块不同，这两批固件是造出来当天就跑的第一轮——"首跑就过"只说明还没被更刁钻的样本推翻过，不代表规则天然正确；当天复盘、方向双环首跑各有 2 对 FAIL，说明"首跑全过"本身就该被怀疑，见下方"全部PASS是可疑结果"一节。
 
 ### ⭐ 被固件推着改掉的判据（4 条 + 4 处判据空隙）
 
