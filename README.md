@@ -180,6 +180,7 @@ flowchart LR
 | [`examples/`](examples/) | 走通一遍长什么样。全部虚构，不含任何真实素材 |
 | [`fixtures/`](fixtures/) | 自测语料：每条判断规则一对「该触发 / 不该触发」样本 |
 | [`CHANGELOG.md`](CHANGELOG.md) | 版本与契约迁移说明 |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | 维护约定：编号自包含、示例虚构、不写个人事实、每条规则配固件 |
 
 | 版本 | 内容 |
 |---|---|
