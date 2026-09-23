@@ -1,4 +1,4 @@
-# expected · 06-positioning（T-H · M6 双环区分度）
+# expected · 06-positioning（M6 双环区分度）
 
 > **这是断言基准，不是示例。** 每一对固件对应一条会做判断的规则。
 > **通过条件是双向的**：hit **必须**触发、miss **必须**静默。

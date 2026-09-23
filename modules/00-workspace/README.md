@@ -207,6 +207,6 @@
 - SKILL 步骤 4 补一句：用户在对话里随口说的底线数字或"这个别写出去"，记进「只给本人看」，⛔ 不因为他说了就当成可以对外说。
 - 契约登记见 `docs/module-contracts.md` §1，迁移说明见仓库根 `CHANGELOG.md`。固件在 `fixtures/06-positioning/` 与 `fixtures/02-apply/`（规则的消费方在那两个模块）。
 
-## 未发布修订 · 2026-09-13
+## 修订 · 2026-09-13
 
 本轮规则修订与验证见 [仓库变更记录](../../CHANGELOG.md) 和 [定向回归](../../fixtures/research-regression-2026-09-13.md)。历史版本叙述用于追溯；当前执行以 SKILL 正文及配套治理文档为准。
