@@ -46,6 +46,8 @@ Agent 负责整理并完成本次可做部分，交付可直接人工 review 的
 
 ### 运行环境
 
+**按实际能力判断，不按 agent 名称判断。** 本地 CLI agent 可以通过已核实的 Patchright 脚本兼任浏览器侧。无常驻 Host 时，按 [本机 Patchright 与持久 profile 接入](../../docs/patchright-runtime.md) 建立本次运行环境；已有 Host 仍先复用，不为切换后端抢占同一 profile。`npx patchright` 是安装/浏览器 CLI，驱动脚本必须实际导入 `patchright`；CLI 存在不证明脚本后端正确。
+
 1. 找到实际执行网页交互的 Host（持有浏览器会话的常驻进程）、MCP 或本地运行目录；有 Host 时先查状态，复用其会话和唯一 profile owner（占用该浏览器账号资料目录的进程）。核实后端加载的是 `patchright` / `patchright.async_api`，不能因为 API 与 Playwright 相同就把普通 `playwright` 当作该后端，也不能仅凭工具名字推断。公开文本可直接检索；需要网页交互时使用已核实的 Patchright Chromium 环境。缺依赖或接线错误先修复现有运行环境，不另开一个普通 Playwright 会话凑数。
 2. 从这个运行目录或相同 Python 解释器读取安装版本与解析路径，不把依赖声明、锁文件、全局安装或另一个项目的版本当成正在使用的版本。Node 可在该目录运行 `node -p "require('patchright/package.json').version"` 与 `node -p "require.resolve('patchright')"`；Python 用该环境的 `python -m pip show patchright`。这些命令确认磁盘安装；本地或远程的长驻 Host 还须核实该进程的状态报告或启动记录中的已加载后端、版本及解析路径。未取得进程证据时标“运行进程版本未核实”，不把磁盘版当成已加载版，不假称已验证最新版本。
 3. 按所用发行渠道查询最新稳定版：Node 用 `npm view patchright dist-tags.latest`；Python 查 PyPI 的 `patchright` 发布记录，排除预发布与撤回版本。目标是当前稳定版，不硬编码版本号。记录查询日、磁盘安装版、进程已加载版、稳定版和来源。落后则给出该运行目录的升级建议；若已授权维护且没有运行任务，可用项目原有包管理器更新 `patchright`，同步其配套依赖并按需执行同环境的 `patchright install chromium`。升级后重查版本并做读取、填写及结果回读的隔离验证；长驻 Host 还须按管理入口及既有权限重新加载依赖，再核对其进程版本及动作能力，才能声明升级完成。尚未重载或没有进程证据时明确未完成核实。不要关闭浏览器、抢占 profile 或在任务中途替换依赖。查询失败记“最新版本未核实”；已验证可用的运行环境可继续本次授权任务，不把元数据访问失败当平台风控。存在已记录的兼容性故障时保留具体旧版、理由和复查条件，不静默切回普通 Playwright。
