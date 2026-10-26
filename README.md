@@ -5,7 +5,7 @@
 它帮你在四个时刻少走弯路：**投之前**判断这个岗位值不值得投，**面试前**看清这家公司站不站得住，**面试后**把每一场变成修正方向的证据，**拿到 offer 后**排出先后并知道哪个假设变了排序会翻。
 
 > 你需要的唯一东西：**一个能读写本地文件的 agent**（Claude Code / Codex / Cursor 之类）。
-> 不需要会写代码、不需要装任何东西、不需要先读完整套方法论、不需要用某个特定的 agent 产品。
+> 不需要会写代码、不需要先读完整套方法论、不需要用某个特定的 agent 产品。判断模块直接使用；实际网页投递由Agent核对已有执行器，可选本地预算工具只依赖Python标准库。
 
 > 本仓库里的 **offer 指「录用通知」**（公司发给你的那份），不是招聘启事。
 
@@ -19,7 +19,7 @@
 ## 30 秒开始
 
 1. 在下面的表里找到最像你现在处境的那一行
-2. 打开那一行的链接，里面有一份 `SKILL.md`，**整份贴给你的 agent**
+2. 打开那一行的链接，让Agent读取对应模块目录，或提供完整 `SKILL.md`；投递模块还要一起提供 `GOVERNANCE.md` 与 `config/pacing.json`
 3. 说一句你手上有什么。比如：
 
 ```text
@@ -46,7 +46,7 @@
 | "我什么都还没准备好，也不知道从哪开始" | [`00-workspace`](modules/00-workspace/) | 一个 agent 能直接干活的工作区骨架。不需要先想清楚方向，骨架会带着你把想法慢慢填进去；建一次，之后不用每次重讲"我是谁" |
 | "我要 AI 帮我改简历，但绝不能让它编造或美化我的经历" | [`01-resume`](modules/01-resume/) | 保持事实的定制简历、主动改进建议、单页 PDF 核验、独立审查记录 |
 | "投之前我想先知道这个岗位值不值得投" | [`jd-triage`](modules/03-company-analysis/jd-triage/) | 结构化的岗位表和四级定级，理由能追到你自己写的哪一条条件 |
-| "我想让投递定时无人值守地跑，但它必须仍然在做判断" | [`02-apply`](modules/02-apply/) | 判断闸门式投递闭环：缺判断条件就拒绝发送（只读探索和补条件仍可以做），节奏引擎，命中风控信号后自动停手直到你手动解除，每日 review 卡 |
+| "我想每天投100–150份，并按我的条件筛选和定制" | [`02-apply`](modules/02-apply/) | 有效工作量预设、唯一申请计数、发送前占额、跨轮续接和每日review；实际网页动作复用已有执行器 |
 | "明天要面试，这家公司到底靠不靠谱、我该问什么" | [`interview-strategic-assessment`](modules/03-company-analysis/interview-strategic-assessment/) | 四框架疑点表、一页纸问题清单（每条标注对方大概率能不能答）、红旗绿旗判据 |
 | "刚面完，感觉答得不好但说不清哪不好" | [`04-interview`](modules/04-interview/) | 当天复盘卡：被问了什么、哪里答不好、红旗绿旗三态回填，跑题聊嗨的那部分也留下来 |
 | "手上有两个 offer（还有留在原地），到底去哪个" | [`05-offer`](modules/05-offer/) | 横向对照表、排序、翻转点（哪个假设变了排序会翻）。不给你一个假装精确的综合分 |
@@ -105,20 +105,6 @@ flowchart LR
 
 ---
 
-## 不做什么
-
-写在这里是为了防止以后被"用户有需求"撑爆边界。
-
-- ⛔ **不专门指导/建议绕过平台的技术防护措施**。这管的是"仓库建议什么"，不管"你自己用什么执行引擎"，完整说明见 [`modules/02-apply/README.md`](modules/02-apply/README.md)
-- ⛔ **不教在简历里植入影响 AI 初筛的内容**。那是操纵，不是判断力
-- ⛔ **不采集他人个人信息**（HR、其他候选人），**不做全站数据抓取**
-- ⛔ **不提供无上限的投递配置**。无差别大量投递不是这套方法论要解决的问题，恰恰是它要避免的失败模式
-- **不做执行层**。底层投递引擎建议直接用现成的开源实现，见 [`docs/ecosystem.md`](docs/ecosystem.md)
-- **不预测面试题，不给标准答案话术；不给 offer 打综合分；不告诉你该不该转行**，只把可能性摆上台面并给出证伪它的方式
-- **受益人始终是候选人。** 这里不做"帮公司筛人"的任何东西
-
----
-
 ## 已知局限
 
 1. **样本 n=1。** 这套方法论来自一次真实求职实践，尚未在多人身上验证。目前有两位试用者的初步反馈，还不够构成证据
@@ -149,11 +135,11 @@ flowchart LR
 <details>
 <summary><b>换个 agent 还能不能用</b></summary>
 
-能。这里全部是 markdown，没有一行可执行代码，也不依赖任何 agent 产品的专有机制：不需要注册斜杠命令、不需要自动加载或特定目录约定、不需要装 runtime 或 CLI、不需要 git。
+能。各模块用Markdown给出方法，不依赖任何Agent产品的专有机制：不需要注册斜杠命令、不需要自动加载或特定目录约定、不需要git。
 
 `SKILL.md` 只是一个文件名约定，把文件整份交给你的 agent 即可。工作区里给 agent 看的那份约束文件模板叫 `AGENTS.md`；如果你的 agent 读的是别的名字，改个名就行，内容不用动。
 
-唯一的可执行代码是 [`tools/md2pdf`](tools/md2pdf/)（简历模块用来出 PDF），并且配了不用它也能完成的退路。
+可选工具包括 [`tools/md2pdf`](tools/md2pdf/)（简历导出）和 [`tools/apply_budget.py`](tools/apply_budget.py)（本地发送预算与恢复）。Agent核实实际运行能力；不用预算工具时不能宣称有同等事务计数和竞争恢复保障。
 
 </details>
 
@@ -189,7 +175,7 @@ flowchart LR
 
 | 版本 | 内容 |
 |---|---|
-| **v0.1**（当前） | 工作区、简历整理、岗位定级骨架、面试前策略性评估、当天复盘协议、offer 排序、方向双环与主动机会探索、判断闸门式投递 |
+| **v0.2**（当前） | 原有八模块，加可采用的投递工作量配置、唯一申请计数与可选本地预算工具；迁移见CHANGELOG |
 | 接下来 | 岗位定级完整模板（当前只发骨架，具体阈值需要你自己标定） |
 
 </details>
@@ -200,9 +186,9 @@ flowchart LR
 
 A job-search methodology written for AI agents, not a submission script. It covers the judgment points a job seeker actually faces: whether a role is worth applying to, whether a company holds up before the interview, what each interview tells you about your positioning, and how to rank offers with explicit flip points instead of a fake composite score.
 
-All content is plain markdown. The only requirement is an agent that can read and write local files (Claude Code, Codex, Cursor, etc.). Pick the situation you are in from the table above, paste that module's `SKILL.md` to your agent, and tell it what you have. Missing inputs degrade gracefully; nothing errors out.
+The methods are written in Markdown for agents that can read and write local files. Pick your situation above and provide the module directory. The application module includes a usable 100–150 daily workload preset and an optional standard-library Python budget helper; actual submissions use your existing executor. Missing inputs lead to explicit partial work and next steps.
 
-Boundaries: no guidance on evading platform protections, no hidden resume content aimed at AI screeners, no scraping of other people's data, no unlimited submission settings, and the beneficiary is always the candidate. Sample size is one real job search plus two early testers; every threshold is labeled by how trustworthy it is. Issues with counterexamples are welcome.
+Sample size is one real job search plus two early testers; every threshold is labeled by how trustworthy it is. Issues with counterexamples are welcome.
 
 ## License
 

@@ -99,3 +99,10 @@ fixtures/
 [本地 mock 方案](minimal-mock/README.md) 固定 3 场景、10 项关键验收，覆盖创建工作区、岗位判断、策略维护和缺材料降级；与文字判例、发布门禁分开记账。
 
 [2026-09-25 实际 mock 报告](minimal-mock/report-2026-09-25.md)：首轮关键验收 10/10，旧版 4/10；发现一致性盲点后补规则，定向回归 3/3。文件检查与 Agent 内容验收分开记账。
+
+
+## 本地投递预算协议
+
+[预算工具回归](02-apply/test_budget.py) 使用Python标准库，命令为 `python3 -m unittest discover -s fixtures/02-apply -p 'test_*.py' -v`。覆盖100/125/150目标、结果不明占额、87后续接、跨日、重试界限、旧锁迁移及真实子进程竞争。文字判例与运行测试分别记录，历史PASS不代表新版已实跑；真实平台发送另行验证。
+
+使用规则：[投递模块](../modules/02-apply/README.md)、[工具协议](../modules/02-apply/GOVERNANCE.md#7-本地预算工具)。
