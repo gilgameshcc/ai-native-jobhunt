@@ -181,6 +181,6 @@ Python调用可用 `Budget.execute(run_id, application_key, submit_callback, det
 ### v0.1.0（首发）
 
 - 确立四层量级上限、熔断触发与解除条件、执行边界三问、提前结束白名单与反面清单、汇报边界
-- ⭐ 新增 §6「结构化覆盖清单 + 独立核验」——架构设计文档 §6.5 的首次落地实现，含最小字段设计、独立核验的调用方式与退化路径、价值边界声明
+- ⭐ 新增 §6「结构化覆盖清单 + 独立核验」——对应公开[工作区架构](../../docs/workspace-architecture.md) §5.5，含最小字段设计、独立核验的调用方式与退化路径、价值边界声明
 
 关联阅读：[research-regression-2026-09-13](../../fixtures/research-regression-2026-09-13.md)。
